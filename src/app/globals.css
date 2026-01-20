@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-inter: 'Inter', sans-serif;
+  --font-share-tech-mono: 'Share Tech Mono', monospace;
+
+  /* Default Dark Mode (Cyberpunk) */
+  --heist-bg: #050505;
+  --heist-panel: #0a0a0f;
+  --heist-text: #ffffff;
+  --heist-subtext: #a1a1aa;
+  /* zinc-400 */
+  --neon-cyan: #00f3ff;
+  --danger-red: #ff003c;
+  --warning-yellow: #fcee0a;
+}
+
+[data-theme='light'] {
+  /* Corporate Ice Mode (The Surface / Institute) */
+  --heist-bg: #e2e8f0;
+  /* slate-200: Sterling Silver */
+  --heist-panel: #ffffff;
+  /* Pure White Laboratory */
+  --heist-text: #020617;
+  /* slate-950: Deep Ink */
+  --heist-subtext: #475569;
+  /* slate-600 */
+  --neon-cyan: #0284c7;
+  /* sky-600: Corporate Blue (Readable on white) */
+  --danger-red: #dc2626;
+  /* red-600 */
+  --warning-yellow: #d97706;
+  /* amber-600 */
+}
+
+body {
+  background-color: var(--heist-bg);
+  color: var(--heist-text);
+  font-family: var(--font-inter);
+  overflow-x: hidden;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-heist-bg;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-zinc-800 rounded hover:bg-zinc-700;
+}
+
+/* Utilities */
+.text-glow {
+  text-shadow: 0 0 10px currentColor;
+}
+
+.box-glow {
+  box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
+}
+
+.crt-scanline {
+  background: linear-gradient(to bottom,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0) 50%,
+      rgba(0, 0, 0, 0.2) 50%,
+      rgba(0, 0, 0, 0.2));
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.glitch-text {
+  position: relative;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-text::before {
+  left: 2px;
+  text-shadow: -1px 0 #ff003c;
+  clip: rect(24px, 550px, 90px, 0);
+  animation: glitch-anim-2 3s infinite linear alternate-reverse;
+}
+
+.glitch-text::after {
+  left: -2px;
+  text-shadow: -1px 0 #00f3ff;
+  clip: rect(85px, 550px, 140px, 0);
+  animation: glitch-anim 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+  0% {
+    clip: rect(20px, 9999px, 15px, 0);
+  }
+
+  20% {
+    clip: rect(65px, 9999px, 86px, 0);
+  }
+
+  40% {
+    clip: rect(4px, 9999px, 100px, 0);
+  }
+
+  60% {
+    clip: rect(98px, 9999px, 34px, 0);
+  }
+
+  80% {
+    clip: rect(44px, 9999px, 2px, 0);
+  }
+
+  100% {
+    clip: rect(56px, 9999px, 81px, 0);
+  }
+}
+
+@keyframes glitch-anim-2 {
+  0% {
+    clip: rect(65px, 9999px, 100px, 0);
+  }
+
+  20% {
+    clip: rect(5px, 9999px, 16px, 0);
+  }
+
+  40% {
+    clip: rect(100px, 9999px, 78px, 0);
+  }
+
+  60% {
+    clip: rect(10px, 9999px, 4px, 0);
+  }
+
+  80% {
+    clip: rect(92px, 9999px, 20px, 0);
+  }
+
+  100% {
+    clip: rect(32px, 9999px, 80px, 0);
+  }
+}
