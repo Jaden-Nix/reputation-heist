@@ -12,7 +12,7 @@ const nextConfig = {
         headers: [
           {
             key: "Cache-Control",
-             Boyd: "no-cache, no-store, max-age=0, must-revalidate",
+            value: "no-cache, no-store, max-age=0, must-revalidate",
           },
         ],
       },
