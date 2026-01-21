@@ -9,6 +9,8 @@ import Link from 'next/link';
 import { useReadContract, useWriteContract } from 'wagmi';
 import { BASE_HEIST_ADDRESS, BASE_HEIST_ABI } from '@/lib/contracts';
 import { formatEther, parseEther } from 'viem';
+import LiveChat from '@/components/game/LiveChat';
+import HypeButton from '@/components/game/HypeButton';
 
 export default function HeistRoom() {
     const params = useParams();
@@ -61,8 +63,8 @@ export default function HeistRoom() {
     // Betting State
     const { writeContract: placeBetTx } = useWriteContract();
 
-    const betPoolP1 = heist ? parseFloat(heist.totalBetsP1) : 0;
-    const betPoolP2 = heist ? parseFloat(heist.totalBetsP2) : 0;
+    const betPoolP1 = heist?.totalBetsP1 ? parseFloat(heist.totalBetsP1) : 0;
+    const betPoolP2 = heist?.totalBetsP2 ? parseFloat(heist.totalBetsP2) : 0;
     const [userBet, setUserBet] = useState(0); // TODO: Fetch user specific bet if needed
 
     const handleBet = (side: 'P1' | 'P2') => {
@@ -175,127 +177,117 @@ export default function HeistRoom() {
 
                     {/* Terminal */}
                     <Terminal logs={logs} className="shadow-2xl" />
+
+                    {/* Hype Interaction */}
+                    <div className="pt-8 border-t border-zinc-800">
+                        <h4 className="text-zinc-500 text-xs font-mono uppercase mb-4">Spectator Actions</h4>
+                        <HypeButton />
+                    </div>
                 </div>
 
-                {/* Right: Action */}
-                <div className="flex flex-col justify-center">
-                    {status === 'ACTIVE' && (
-                        <div className="bg-zinc-900/50 p-8 border border-zinc-700 backdrop-blur-sm">
-                            {/* Open Bounty Join Logic */}
-                            {heist.player2.address === '0x0000000000000000000000000000000000000000' ? (
-                                <div className="text-center space-y-4">
-                                    <h2 className="text-2xl font-bold text-white mb-2 flex items-center justify-center gap-2">
-                                        <AlertTriangle className="text-neon-cyan" /> OPEN CONTRACT
-                                    </h2>
-                                    <p className="text-zinc-400 text-sm">
-                                        This heist has no assigned operative. First to claim it takes the risk.
-                                    </p>
-
-                                    {Number(heist.collateral) > 0 && (
-                                        <div className="bg-red-900/20 border border-red-500/50 p-2 text-red-400 text-xs font-mono inline-block">
-                                            ⚠️ REQUIRES {heist.collateral} ETH COLLATERAL
-                                        </div>
-                                    )}
-
-                                    <button
-                                        onClick={() => placeBetTx({ // Using placeBetTx alias but calling joinHeist
-                                            address: BASE_HEIST_ADDRESS,
-                                            abi: BASE_HEIST_ABI,
-                                            functionName: 'joinHeist',
-                                            args: [BigInt(heist.id)],
-                                            value: parseEther(heist.collateral) // Must pay collateral to join
-                                        })}
-                                        className="w-full bg-neon-cyan text-black font-black uppercase py-4 text-xl hover:scale-[1.02] transition-transform shadow-[0_0_20px_rgba(0,243,255,0.4)]"
-                                    >
-                                        ACCEPT MISSION
-                                    </button>
-                                </div>
-                            ) : (
-                                <form onSubmit={handleSubmit}>
-                                    <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                                        <Clock className="text-neon-cyan" /> SUBMIT PROOF
-                                    </h2>
-                                    <div className="space-y-4 mb-6">
-                                        <input
-                                            type="text"
-                                            value={proof}
-                                            onChange={(e) => setProof(e.target.value)}
-                                            placeholder="Paste Tweet / Etherscan / Image URL..."
-                                            className="w-full bg-black border border-zinc-600 p-4 text-white focus:border-neon-cyan outline-none font-mono"
-                                        />
-                                        <p className="text-xs text-zinc-500">
-                                            *Must provide verifiable on-chain or social proof.
-                                            AI will cross-reference with provided metadata.
+                {/* Right: Action & Comms */}
+                <div className="flex flex-col gap-6">
+                    {/* Action Panel */}
+                    <div className="flex flex-col justify-center">
+                        {status === 'ACTIVE' && (
+                            <div className="bg-zinc-900/50 p-8 border border-zinc-700 backdrop-blur-sm">
+                                {/* Open Bounty Join Logic */}
+                                {heist.player2.address === '0x0000000000000000000000000000000000000000' ? (
+                                    <div className="text-center space-y-4">
+                                        <h2 className="text-2xl font-bold text-white mb-2 flex items-center justify-center gap-2">
+                                            <AlertTriangle className="text-neon-cyan" /> OPEN CONTRACT
+                                        </h2>
+                                        <p className="text-zinc-400 text-sm">
+                                            This heist has no assigned operative. First to claim it takes the risk.
                                         </p>
+
+                                        {Number(heist.collateral) > 0 && (
+                                            <div className="bg-red-900/20 border border-red-500/50 p-2 text-red-400 text-xs font-mono inline-block">
+                                                ⚠️ REQUIRES {heist.collateral} ETH COLLATERAL
+                                            </div>
+                                        )}
+
+                                        <button
+                                            onClick={() => placeBetTx({ // Using placeBetTx alias but calling joinHeist
+                                                address: BASE_HEIST_ADDRESS,
+                                                abi: BASE_HEIST_ABI,
+                                                functionName: 'joinHeist',
+                                                args: [BigInt(heist.id)],
+                                                value: parseEther(heist.collateral || '0')
+                                            })}
+                                            className="w-full bg-neon-cyan text-black font-black uppercase py-4 text-xl hover:scale-[1.02] transition-transform shadow-[0_0_20px_rgba(0,243,255,0.4)]"
+                                        >
+                                            ACCEPT MISSION
+                                        </button>
                                     </div>
-                                    <button className="w-full bg-neon-cyan text-black font-black uppercase py-4 text-xl hover:scale-[1.02] transition-transform shadow-[0_0_20px_rgba(0,243,255,0.4)]">
-                                        LOCK IN SUBMISSION
-                                    </button>
-                                </form>
-                            )}
-                        </div>
-                    )}
+                                ) : (
+                                    <form onSubmit={handleSubmit}>
+                                        <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                                            <Clock className="text-neon-cyan" /> SUBMIT PROOF
+                                        </h2>
+                                        <div className="space-y-4 mb-6">
+                                            <input
+                                                type="text"
+                                                value={proof}
+                                                onChange={(e) => setProof(e.target.value)}
+                                                placeholder="Paste Tweet / Etherscan / Image URL..."
+                                                className="w-full bg-black border border-zinc-600 p-4 text-white focus:border-neon-cyan outline-none font-mono"
+                                            />
+                                            <p className="text-xs text-zinc-500">
+                                                *Must provide verifiable on-chain or social proof.
+                                                AI will cross-reference with provided metadata.
+                                            </p>
+                                        </div>
+                                        <button className="w-full bg-neon-cyan text-black font-black uppercase py-4 text-xl hover:scale-[1.02] transition-transform shadow-[0_0_20px_rgba(0,243,255,0.4)]">
+                                            LOCK IN SUBMISSION
+                                        </button>
+                                    </form>
+                                )}
+                            </div>
+                        )}
 
-                    {status === 'JUDGING' && (
-                        <div className="text-center space-y-4">
+                        {status === 'JUDGING' && (
+                            <div className="text-center space-y-4">
+                                <motion.div
+                                    animate={{ rotate: 360 }}
+                                    transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                                    className="w-24 h-24 border-t-4 border-neon-cyan rounded-full mx-auto"
+                                />
+                                <h2 className="text-2xl font-black text-white animate-pulse">JUDGING IN PROGRESS</h2>
+                                <p className="text-zinc-500 font-mono">Heist Master is analyzing vectors...</p>
+                            </div>
+                        )}
+
+                        {status === 'SETTLED' && verdict && (
+                            <div className={`p-8 border-l-4 ${verdict.winner_is_p1 ? 'border-green-500 bg-green-900/20' : 'border-red-500 bg-red-900/20'}`}>
+                                <h2 className={`text-4xl font-black italic mb-2 ${verdict.winner_is_p1 ? 'text-green-500' : 'text-red-500'}`}>
+                                    {verdict.winner_is_p1 ? 'MISSION ACCOMPLISHED' : 'MISSION FAILED'}
+                                </h2>
+                                <p className="font-mono text-zinc-300">{verdict.explanation}</p>
+                            </div>
+                        )}
+
+                        {status === 'ESCROW' && verdict && (
                             <motion.div
-                                animate={{ rotate: 360 }}
-                                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                                className="w-24 h-24 border-t-4 border-neon-cyan rounded-full mx-auto"
-                            />
-                            <h2 className="text-2xl font-black text-white animate-pulse">JUDGING IN PROGRESS</h2>
-                            <p className="text-zinc-500 font-mono">Heist Master is analyzing vectors...</p>
-                        </div>
-                    )}
-
-                    {status === 'SETTLED' && verdict && (
-                        <motion.div
-                            initial={{ scale: 0.8, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            className={`p-8 border-4 ${verdict.winner_is_p1 ? 'border-emerald-500/50 bg-emerald-900/10' : 'border-red-500 bg-red-500/10'} text-center`}
-                        >
-                            <h2 className={`text-6xl font-black italic mb-2 ${verdict.winner_is_p1 ? 'text-emerald-400' : 'text-danger-red'}`}>
-                                {verdict.winner_is_p1 ? "MISSION ACCOMPLISHED" : "ELIMINATED"}
-                            </h2>
-                            <div className="text-white text-xl font-mono mb-6">"{verdict.verdict_text}"</div>
-
-                            <div className="grid grid-cols-3 gap-4 text-sm font-bold">
-                                <div className="bg-black/40 p-2">BALLS: {verdict.score_balls}/10</div>
-                                <div className="bg-black/40 p-2">EXEC: {verdict.score_execution}/10</div>
-                                <div className="bg-black/40 p-2">CHAOS: {verdict.score_chaos}/10</div>
-                            </div>
-
-                            {userBet > 0 && (
-                                <div className="mt-6 bg-black p-4 border border-zinc-800">
-                                    <h3 className="text-neon-cyan font-bold mb-1">WINNINGS CLAIMABLE</h3>
-                                    <p className="text-white text-2xl font-mono">{(userBet * 1.5).toFixed(2)} ETH</p>
+                                initial={{ scale: 0.8, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                className="p-8 border-4 border-warning-yellow bg-warning-yellow/10 text-center"
+                            >
+                                <h2 className="text-3xl font-black italic text-warning-yellow mb-4">
+                                    <div className="flex items-center justify-center gap-2"><AlertTriangle size={32} /> DISPUTE OPEN</div>
+                                </h2>
+                                <div className="text-white text-lg font-mono mb-6">
+                                    "Confidence Score: {verdict.confidence_score}% (Too Low). <br />
+                                    Funds locked for 24h."
                                 </div>
-                            )}
-                        </motion.div>
-                    )}
+                            </motion.div>
+                        )}
+                    </div>
 
-                    {status === 'ESCROW' && verdict && (
-                        <motion.div
-                            initial={{ scale: 0.8, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            className="p-8 border-4 border-warning-yellow bg-warning-yellow/10 text-center"
-                        >
-                            <h2 className="text-5xl font-black italic text-warning-yellow mb-4">
-                                <div className="flex items-center justify-center gap-2"><AlertTriangle size={48} /> DISPUTE OPEN</div>
-                            </h2>
-                            <div className="text-white text-lg font-mono mb-6">
-                                "Confidence Score: {verdict.confidence_score}% (Too Low). <br />
-                                Funds locked in Escrow for 24h."
-                            </div>
-
-                            <div className="bg-zinc-900 p-4 border border-zinc-700">
-                                <p className="text-sm text-zinc-400 mb-2">High-Reputation Users (Tier: Revered) can vote to resolve.</p>
-                                <button className="w-full bg-warning-yellow text-black font-bold uppercase py-3">
-                                    OPEN JURY PORTAL
-                                </button>
-                            </div>
-                        </motion.div>
-                    )}
+                    {/* Live Chat Integration */}
+                    <div className="h-[400px]">
+                        <LiveChat />
+                    </div>
                 </div>
             </div>
         </main>

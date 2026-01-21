@@ -1,6 +1,5 @@
 'use client';
-import { cn } from "@/lib/utils";
-import { itemVariants } from "@/lib/animations"; // Need to ensure animations exist or inline them
+import { cn } from "../../lib/utils";
 import { motion } from "framer-motion";
 
 export const BentoGrid = ({

@@ -94,9 +94,38 @@ export default function Home() {
                     </div>
 
                     <div className="space-y-4">
-                        {activeHeists.map(h => (
-                            <HeistCard key={h.id} heist={h} onBet={openBettingSlip} />
-                        ))}
+                        {feedMode === 'ARENA' ? (
+                            activeHeists.map(h => (
+                                <HeistCard key={h.id} heist={h} onBet={openBettingSlip} />
+                            ))
+                        ) : (
+                            <div className="bg-heist-panel border border-zinc-800 p-4">
+                                <div className="grid grid-cols-5 text-xs font-mono text-zinc-500 border-b border-zinc-800 pb-2 mb-2 uppercase tracking-wider">
+                                    <div className="col-span-2">Contract</div>
+                                    <div className="text-right">Bounty</div>
+                                    <div className="text-right">Vol (24h)</div>
+                                    <div className="text-right">Action</div>
+                                </div>
+                                {activeHeists.map((h, i) => (
+                                    <div key={h.id} className="grid grid-cols-5 items-center py-3 border-b border-zinc-800/50 hover:bg-white/5 transition-colors group">
+                                        <div className="col-span-2 flex flex-col">
+                                            <span className="text-white font-bold text-sm group-hover:text-neon-cyan transition-colors">{h.player1.name} VS {h.player2.name}</span>
+                                            <span className="text-[10px] text-zinc-500 font-mono">{h.category} // {h.timestamp}</span>
+                                        </div>
+                                        <div className="text-right font-mono text-neon-cyan">{h.bounty}</div>
+                                        <div className="text-right font-mono text-zinc-400">{(Math.random() * 10).toFixed(2)} ETH</div>
+                                        <div className="text-right">
+                                            <button
+                                                onClick={() => openBettingSlip(h, 'P1')}
+                                                className="bg-zinc-800 hover:bg-neon-cyan hover:text-black text-white text-[10px] uppercase font-bold px-3 py-1 rounded transition-all"
+                                            >
+                                                TRADE
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
 

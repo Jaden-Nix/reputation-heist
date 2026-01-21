@@ -25,4 +25,5 @@ export interface Heist {
     totalBetsP1?: string;
     totalBetsP2?: string;
     confidence?: bigint;
+    collateral?: string;
 }
