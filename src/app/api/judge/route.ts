@@ -52,8 +52,11 @@ export async function POST(request: Request) {
         const text = response.text();
 
         // Clean up markdown blocks if Gemini adds them
-        const jsonString = text.replace(/```json\n|\n```/g, "");
-        const verdictData = JSON.parse(jsonString);
+        const jsonMatch = text.match(/\{[\s\S]*\}/);
+        if (!jsonMatch) {
+            throw new Error("Invalid response format from AI");
+        }
+        const verdictData = JSON.parse(jsonMatch[0]);
 
         return NextResponse.json({
             success: true,
