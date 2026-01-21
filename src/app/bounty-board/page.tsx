@@ -58,7 +58,7 @@ export default function BountyBoard() {
                         />
                     </div>
                     <Link href="/create-heist" className="w-full md:w-auto">
-                        <button className="w-full px-8 py-3 bg-neon-cyan text-black font-black uppercase hover:bg-white transition-all shadow-[0_0_25px_rgba(0,243,255,0.4)] flex items-center justify-center gap-2">
+                        <button className="w-full px-8 py-3 bg-neon-cyan text-black font-black uppercase hover:bg-black hover:text-white transition-all shadow-[0_0_25px_rgba(0,243,255,0.4)] flex items-center justify-center gap-2">
                             + DEPLOY DARE
                         </button>
                     </Link>
