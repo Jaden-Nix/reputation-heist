@@ -4,7 +4,9 @@ const nextConfig = {
     serverActions: {
       allowedOrigins: ["*"],
     },
-    allowedDevOrigins: ["8e13cbcb-32e8-4499-9f63-67ffb90ece2c-00-3prgi0skbrdze.janeway.replit.dev"],
+  },
+  devIndicators: {
+    appIsrStatus: false,
   },
   async headers() {
     return [
