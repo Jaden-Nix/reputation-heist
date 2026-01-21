@@ -32,6 +32,7 @@ const config: Config = {
                 "marquee": "marquee 30s linear infinite",
                 "glitch": "glitch 1s linear infinite",
                 "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+                "spin-slow": "spin 8s linear infinite",
             },
             keyframes: {
                 scan: {
