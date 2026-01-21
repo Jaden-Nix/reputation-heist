@@ -1,4 +1,4 @@
-import { pgTable, serial, text, timestamp, integer, decimal } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, timestamp, integer, numeric } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -8,8 +8,8 @@ export const heists = pgTable("heists", {
   opponentAddress: text("opponent_address"),
   dare: text("dare").notNull(),
   category: text("category").notNull(),
-  bounty: decimal("bounty", { precision: 20, scale: 10 }).notNull(),
-  collateral: decimal("collateral", { precision: 20, scale: 10 }).notNull(),
+  bounty: numeric("bounty", { precision: 20, scale: 10 }).notNull(),
+  collateral: numeric("collateral", { precision: 20, scale: 10 }).notNull(),
   status: text("status").notNull().default("LIVE"), // LIVE, JUDGING, SETTLED, ESCROW
   verdict: text("verdict"),
   confidenceScore: integer("confidence_score"),

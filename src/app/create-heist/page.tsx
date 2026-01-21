@@ -36,10 +36,28 @@ export default function CreateHeist() {
 
         try {
             console.log('Initiating Heist Creation...');
-            // Calculate total value: Bounty + Listing Fee
+            setIsSubmitting(true);
+            
+            // 1. Database Sync (Persistent Record)
+            const dbRes = await fetch('/api/heists', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    creatorAddress: '0x...', // Use actual address if available
+                    dare: form.dare,
+                    category: form.category,
+                    bounty: form.bounty,
+                    collateral: form.collateral,
+                }),
+            });
+
+            if (!dbRes.ok) {
+                toast.error('DATABASE_UPLINK_ERROR', { description: 'Failed to record heist in archives.' });
+            }
+
+            // 2. Blockchain Transaction
             const bountyAmount = parseEther(form.bounty || '0');
             const totalValue = bountyAmount + LISTING_FEE;
-            // Parse Collateral
             const collateralAmount = parseEther(form.collateral || '0');
 
             writeContract({
@@ -50,23 +68,18 @@ export default function CreateHeist() {
                 value: totalValue
             }, {
                 onSuccess: (hash) => {
-                    console.log('Tx sent:', hash);
-                    // In a real app, we'd wait for receipt here or use useWaitForTransactionReceipt
+                    toast.success('HEIST_DEPLOYED', { description: 'Contract live on Base Sepolia.' });
                     setTimeout(() => router.push('/bounty-board'), 2000);
                 },
                 onError: (err) => {
+                    setIsSubmitting(false);
                     const message = (err as any).shortMessage || err.message;
-                    if (message.includes("User rejected") || message.includes("User denied")) {
-                        console.log("Transaction cancelled by user.");
-                        return; // Silent fail for cancellation
-                    }
-                    console.error("Heist Deployment Failed:", err);
-                    alert("Deployment Failed: " + message);
+                    toast.error('DEPLOYMENT_FAILED', { description: message });
                 }
             });
         } catch (error) {
-            console.error("Error preparing transaction:", error);
-            alert("Error: " + (error as any).message);
+            setIsSubmitting(false);
+            toast.error('CRITICAL_FAILURE', { description: (error as any).message });
         }
     };
 
