@@ -12,6 +12,8 @@ export const metadata: Metadata = {
     description: 'Bet your reputation. Complete the dare. Or get cooked by the AI.',
 };
 
+import { Toaster } from 'sonner';
+
 export default function RootLayout({
     children,
 }: {
@@ -23,6 +25,7 @@ export default function RootLayout({
                 <div className="scanlines opacity-20 pointer-events-none" />
 
                 <Web3Provider>
+                    <Toaster position="bottom-right" richColors theme="dark" />
                     <nav className="fixed top-0 right-0 p-6 z-50 flex gap-4">
                         <ConnectWallet />
                         <ThemeToggle />

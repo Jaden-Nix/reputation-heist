@@ -12,6 +12,8 @@ import { formatEther, parseEther } from 'viem';
 import LiveChat from '@/components/game/LiveChat';
 import HypeButton from '@/components/game/HypeButton';
 
+import { toast } from 'sonner';
+
 export default function HeistRoom() {
     const params = useParams();
     const rawId = params.id as string;
@@ -68,20 +70,38 @@ export default function HeistRoom() {
     const [userBet, setUserBet] = useState(0); // TODO: Fetch user specific bet if needed
 
     const handleBet = (side: 'P1' | 'P2') => {
-        placeBetTx({
-            address: BASE_HEIST_ADDRESS,
-            abi: BASE_HEIST_ABI,
-            functionName: 'placeBet',
-            args: [heistId, side === 'P1'], // true = P1, false = P2
-            value: parseEther('0.05') // Hardcoded demo wager
-        });
-        addLog(`> Bet transaction sent for ${side === 'P1' ? 'Challenger' : 'Daredevil'}...`);
+        try {
+            placeBetTx({
+                address: BASE_HEIST_ADDRESS,
+                abi: BASE_HEIST_ABI,
+                functionName: 'placeBet',
+                args: [heistId, side === 'P1'], // true = P1, false = P2
+                value: parseEther('0.05') // Hardcoded demo wager
+            });
+            addLog(`> Bet transaction sent for ${side === 'P1' ? 'Challenger' : 'Daredevil'}...`);
+            toast.success('TRANSACTION_INITIALIZED', {
+                description: 'Awaiting blockchain confirmation...',
+                className: 'font-mono uppercase'
+            });
+        } catch (err) {
+            toast.error('UPLINK_FAILURE', {
+                description: 'Transaction was rejected or failed.',
+                className: 'font-mono uppercase'
+            });
+        }
     };
 
     if (isHeistLoading || !heist) return <div className="p-20 text-center font-mono animate-pulse text-neon-cyan">ACCESSING ENCRYPTED ARCHIVES...</div>;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (!proof) {
+            toast.error('INPUT_REQUIRED', {
+                description: 'You must provide a proof URL to continue.',
+                className: 'font-mono uppercase'
+            });
+            return;
+        }
         setStatus('JUDGING');
         addLog(`> Proof received: ${proof}`);
         addLog("Encrypting submission...");
@@ -94,6 +114,9 @@ export default function HeistRoom() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ heistId: heist.id, proofUrl: proof }),
             });
+            
+            if (!res.ok) throw new Error('API_ERROR');
+            
             const data = await res.json();
 
             // Simulate stream of "thoughts"
