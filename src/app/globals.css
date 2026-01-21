@@ -20,21 +20,15 @@
 }
 
 [data-theme='light'] {
-  /* Corporate Ice Mode (The Surface / Institute) */
-  --heist-bg: #e2e8f0;
-  /* slate-200: Sterling Silver */
+  --heist-bg: #f8fafc;
   --heist-panel: #ffffff;
-  /* Pure White Laboratory */
-  --heist-text: #020617;
-  /* slate-950: Deep Ink */
-  --heist-subtext: #475569;
-  /* slate-600 */
-  --neon-cyan: #0284c7;
-  /* sky-600: Corporate Blue (Readable on white) */
-  --danger-red: #dc2626;
-  /* red-600 */
-  --warning-yellow: #d97706;
-  /* amber-600 */
+  --heist-text: #0f172a;
+  --heist-subtext: #64748b;
+  --neon-cyan: #0ea5e9;
+  --danger-red: #ef4444;
+  --warning-yellow: #f59e0b;
+  --foreground: 222.2 84% 4.9%;
+  --background: 210 40% 98%;
 }
 
 body {

@@ -11,18 +11,15 @@ export default function BountyBoard() {
             <div className="crt-scanline absolute inset-0 pointer-events-none fixed" />
             <div className="absolute inset-0 bg-heist-bg -z-10 fixed" />
 
-            <header className="flex justify-between items-end mb-12 border-b border-zinc-800 pb-6">
+            <header className="flex justify-between items-center mb-12 border-b border-zinc-200 dark:border-zinc-800 pb-6">
                 <div>
-                    <h1 className="text-4xl md:text-6xl font-black italic text-white mb-2 glitch-text" data-text="BOUNTY BOARD">BOUNTY BOARD</h1>
-                    <p className="text-zinc-500 font-mono">/// ACTIVE_CONTRACTS /// ETHOS_GATED /// HIGH_YIELD</p>
+                    <h1 className="text-4xl md:text-5xl font-black italic text-foreground mb-2 glitch-text" data-text="BOUNTY BOARD">BOUNTY BOARD</h1>
+                    <p className="text-muted-foreground font-mono text-sm tracking-tighter">/// ACTIVE_CONTRACTS /// ETHOS_VERIFIED</p>
                 </div>
                 <div className="flex gap-4">
-                    <button className="flex items-center gap-2 px-4 py-2 border border-zinc-700 bg-zinc-900/50 text-neon-cyan font-mono hover:bg-zinc-800 transition">
-                        <Filter size={16} /> FILTER: ALL
-                    </button>
-                    <Link href="/">
-                        <button className="px-6 py-2 bg-zinc-800 hover:bg-zinc-700 text-white font-bold uppercase transition">
-                            ← Back to Lobby
+                    <Link href="/create-heist">
+                        <button className="px-6 py-2 bg-primary text-primary-foreground font-black uppercase hover:scale-105 transition-transform shadow-[0_0_15px_rgba(0,243,255,0.3)]">
+                            + NEW DARE
                         </button>
                     </Link>
                 </div>
