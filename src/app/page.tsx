@@ -7,7 +7,7 @@ import { Shield, Zap, TrendingUp, ArrowRight, UserCircle2 } from 'lucide-react';
 
 export default function Home() {
     return (
-        <main className="min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden bg-heist-bg">
+        <main className="min-h-screen flex flex-col items-center justify-center p-6 pt-32 relative overflow-hidden bg-heist-bg">
             {/* Global UI Elements */}
             <div className="crt-scanline absolute inset-0 pointer-events-none opacity-20" />
             <HeistTicker />
@@ -16,7 +16,7 @@ export default function Home() {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-neon-cyan/5 via-transparent to-transparent -z-10" />
 
             <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center z-10">
-                
+
                 {/* Hero Section (Left) */}
                 <div className="lg:col-span-7 flex flex-col items-start space-y-8">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-neon-cyan/30 bg-neon-cyan/5 text-[10px] font-mono text-neon-cyan uppercase tracking-[0.2em]">
@@ -35,8 +35,8 @@ export default function Home() {
                     </div>
 
                     <p className="text-xl md:text-2xl text-muted-foreground font-medium max-w-xl leading-relaxed">
-                        The world's first AI-judged reputation market. 
-                        <span className="text-foreground"> Stake ETH on dares.</span> 
+                        The world's first AI-judged reputation market.
+                        <span className="text-foreground"> Stake ETH on dares.</span>
                         Survive the Heist Master's gaze or get cooked.
                     </p>
 
@@ -80,13 +80,13 @@ export default function Home() {
                         {/* Orbiting Ring */}
                         <div className="absolute inset-0 border border-dashed border-neon-cyan/20 rounded-full animate-spin-slow" />
                         <div className="absolute inset-8 border border-zinc-800 rounded-full" />
-                        
+
                         <div className="relative z-10 scale-150">
                             <HeistMasterEye />
                         </div>
 
                         {/* Floating Badges */}
-                        <motion.div 
+                        <motion.div
                             animate={{ y: [0, -10, 0] }}
                             transition={{ duration: 4, repeat: Infinity }}
                             className="absolute top-0 right-0 bg-background border border-zinc-800 p-3 shadow-xl"
@@ -95,7 +95,7 @@ export default function Home() {
                             <div className="text-[10px] font-mono font-bold">ETHOS_GATED</div>
                         </motion.div>
 
-                        <motion.div 
+                        <motion.div
                             animate={{ y: [0, 10, 0] }}
                             transition={{ duration: 5, repeat: Infinity }}
                             className="absolute bottom-12 left-0 bg-background border border-zinc-800 p-3 shadow-xl"

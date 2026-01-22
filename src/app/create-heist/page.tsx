@@ -3,17 +3,19 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Crown, AlertTriangle, ArrowRight } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useWriteContract, useAccount } from 'wagmi';
 import { parseEther } from 'viem';
 import { BASE_HEIST_ADDRESS, BASE_HEIST_ABI } from '@/lib/contracts';
+import { toast } from 'sonner';
 
 export default function CreateHeist() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const [form, setForm] = useState({
-        dare: '',
-        opponent: '',
-        bounty: '0.05',
+        dare: searchParams.get('dare') || '',
+        opponent: searchParams.get('opponent') || '',
+        bounty: searchParams.get('bounty') || '0.05',
         category: 'SOCIAL',
         collateral: '0.00'
     });
@@ -37,7 +39,7 @@ export default function CreateHeist() {
         try {
             console.log('Initiating Heist Creation...');
             setIsSubmitting(true);
-            
+
             // 1. Database Sync (Persistent Record)
             const dbRes = await fetch('/api/heists', {
                 method: 'POST',
@@ -90,14 +92,14 @@ export default function CreateHeist() {
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="max-w-2xl w-full bg-heist-panel border border-zinc-800 p-8 shadow-2xl relative"
+                className="max-w-2xl w-full bg-black border border-zinc-800 p-8 shadow-2xl relative"
             >
-                <Link href="/bounty-board" className="text-zinc-500 hover:text-white font-mono text-sm mb-6 block">← CANCEL MISSION</Link>
+                <Link href="/bounty-board" className="text-muted-foreground hover:text-foreground font-mono text-sm mb-6 block transition-colors">← CANCEL MISSION</Link>
 
-                <h1 className="text-4xl font-black italic text-white mb-2 flex items-center gap-3">
+                <h1 className="text-4xl font-black italic text-foreground mb-2 flex items-center gap-3">
                     <Crown className="text-neon-cyan" /> DEPLOY HEIST
                 </h1>
-                <p className="text-zinc-500 font-mono mb-8 border-b border-zinc-800 pb-4">
+                <p className="text-muted-foreground font-mono mb-8 border-b border-zinc-200 dark:border-zinc-800 pb-4">
                     Target an opponent. Stake your reputation. No refunds if they cook you.
                 </p>
 
@@ -109,7 +111,7 @@ export default function CreateHeist() {
                         <input
                             type="text"
                             placeholder="Leave empty for OPEN BOUNTY (Anyone can accept)"
-                            className="w-full bg-black border border-zinc-700 p-4 text-white focus:border-neon-cyan outline-none font-mono placeholder:text-zinc-700"
+                            className="w-full bg-black border border-zinc-800 rounded-lg p-4 text-white focus:border-neon-cyan outline-none font-mono placeholder:text-zinc-600 transition-colors"
                             value={form.opponent}
                             onChange={(e) => setForm({ ...form, opponent: e.target.value })}
                         />
@@ -124,7 +126,7 @@ export default function CreateHeist() {
                             required
                             rows={3}
                             placeholder="e.g. Get Elon Musk to reply to your tweet with 'Based' within 24h..."
-                            className="w-full bg-black border border-zinc-700 p-4 text-white focus:border-neon-cyan outline-none font-mono placeholder:text-zinc-700 resize-none"
+                            className="w-full bg-black border border-zinc-800 rounded-lg p-4 text-white focus:border-neon-cyan outline-none font-mono placeholder:text-zinc-600 resize-none transition-colors"
                             value={form.dare}
                             onChange={(e) => setForm({ ...form, dare: e.target.value })}
                         />
@@ -138,7 +140,7 @@ export default function CreateHeist() {
                                 step="0.01"
                                 min="0.01"
                                 required
-                                className="w-full bg-black border border-zinc-700 p-4 text-white focus:border-neon-cyan outline-none font-mono"
+                                className="w-full bg-black border border-zinc-800 rounded-lg p-4 text-white focus:border-neon-cyan outline-none font-mono transition-colors"
                                 value={form.bounty}
                                 onChange={(e) => setForm({ ...form, bounty: e.target.value })}
                             />
@@ -150,7 +152,7 @@ export default function CreateHeist() {
                                 step="0.01"
                                 min="0"
                                 required
-                                className="w-full bg-black border border-zinc-700 p-4 text-white focus:border-neon-cyan outline-none font-mono"
+                                className="w-full bg-black border border-zinc-800 rounded-lg p-4 text-white focus:border-neon-cyan outline-none font-mono transition-colors"
                                 value={form.collateral}
                                 onChange={(e) => setForm({ ...form, collateral: e.target.value })}
                             />
@@ -158,7 +160,7 @@ export default function CreateHeist() {
                         <div>
                             <label className="block text-xs font-mono text-neon-cyan mb-2 uppercase tracking-widest">Category</label>
                             <select
-                                className="w-full bg-black border border-zinc-700 p-4 text-white focus:border-neon-cyan outline-none font-mono appearance-none"
+                                className="w-full bg-black border border-zinc-800 rounded-lg p-4 text-white focus:border-neon-cyan outline-none font-mono appearance-none transition-colors"
                                 value={form.category}
                                 onChange={(e) => setForm({ ...form, category: e.target.value })}
                             >

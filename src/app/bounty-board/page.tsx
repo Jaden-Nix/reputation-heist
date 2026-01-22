@@ -27,9 +27,8 @@ export default function BountyBoard() {
     }, []);
 
     return (
-        <main className="min-h-screen p-8 pb-24 relative overflow-hidden">
-            <div className="crt-scanline absolute inset-0 pointer-events-none fixed" />
-            <div className="absolute inset-0 bg-heist-bg -z-10 fixed" />
+        <main className="min-h-screen p-8 pt-28 pb-24 relative overflow-hidden">
+            <div className="absolute inset-0 bg-heist-bg -z-10" />
 
             {/* Ethos Background Detail */}
             <div className="absolute top-0 right-0 w-1/3 h-full opacity-[0.03] pointer-events-none">
@@ -40,25 +39,28 @@ export default function BountyBoard() {
             <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 border-b border-zinc-200 dark:border-zinc-800 pb-8 gap-6">
                 <div className="relative">
                     <div className="absolute -left-4 top-0 bottom-0 w-1 bg-neon-cyan/50" />
-                    <h1 className="text-5xl md:text-7xl font-black italic text-foreground mb-2 glitch-text tracking-tighter" data-text="THE BOARD">THE BOARD</h1>
+                    <h1 className="text-5xl md:text-7xl font-black italic text-foreground mb-2 glitch-text tracking-tighter flex items-baseline gap-0.5" data-text="THE BOARD">
+                        THE BOARD
+                        <Skull className="text-foreground fill-foreground translate-y-0 opacity-100" size={12} strokeWidth={0} />
+                    </h1>
                     <div className="flex items-center gap-4 text-xs font-mono uppercase tracking-[0.2em] text-muted-foreground">
                         <span className="flex items-center gap-1 text-neon-cyan"><Activity size={14} /> LIVE_UPLINK</span>
                         <span>•</span>
                         <span className="text-purple-500 flex items-center gap-1"><Shield size={14} /> ETHOS_ENFORCED</span>
                     </div>
                 </div>
-                
+
                 <div className="flex flex-wrap items-center gap-4 w-full md:w-auto">
                     <div className="relative flex-1 md:w-64">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={16} />
-                        <input 
-                            type="text" 
-                            placeholder="Search Dares..." 
-                            className="w-full bg-background border border-zinc-300 dark:border-zinc-700 p-2 pl-10 text-sm focus:border-neon-cyan outline-none font-mono"
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" size={16} />
+                        <input
+                            type="text"
+                            placeholder="Search Dares..."
+                            className="w-full bg-background/50 backdrop-blur-sm border border-zinc-300 dark:border-zinc-700 rounded-full py-3 pl-10 pr-4 text-sm focus:border-neon-cyan outline-none font-mono transition-all hover:bg-background/80"
                         />
                     </div>
                     <Link href="/create-heist" className="w-full md:w-auto">
-                        <button className="w-full px-8 py-3 bg-neon-cyan text-black font-black uppercase hover:bg-black hover:text-white transition-all shadow-[0_0_25px_rgba(0,243,255,0.4)] flex items-center justify-center gap-2">
+                        <button className="w-full px-8 py-3 bg-neon-cyan text-black font-black uppercase rounded-full hover:bg-white transition-all shadow-[0_0_20px_rgba(0,243,255,0.3)] flex items-center justify-center gap-2 hover:scale-105 active:scale-95">
                             + DEPLOY DARE
                         </button>
                     </Link>
@@ -108,9 +110,9 @@ export default function BountyBoard() {
                                 </div>
                             </div>
 
-                            <Link href={`/heist/${heist.id}`}>
+                            <Link href={heist.id === 'h-1' ? `/heist/${heist.id}?demo=denied` : `/heist/${heist.id}`}>
                                 <button className="w-full bg-foreground text-background font-black uppercase py-4 text-sm hover:bg-neon-cyan hover:text-black transition-all">
-                                    ACCEPT MISSION
+                                    {heist.id === 'h-1' ? "ACCEPT MISSION (DEMO: DENIED)" : "ACCEPT MISSION"}
                                 </button>
                             </Link>
                         </motion.div>

@@ -58,13 +58,13 @@ export default function LiveChat() {
     };
 
     return (
-        <div className="flex flex-col h-[400px] bg-black/50 border border-zinc-800 backdrop-blur-sm">
+        <div className="flex flex-col h-[400px] bg-black/60 border border-zinc-800 backdrop-blur-sm">
             {/* Header */}
             <div className="p-2 border-b border-zinc-800 bg-zinc-900/50 flex justify-between items-center">
                 <span className="text-xs font-mono text-neon-cyan flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" /> LIVE FEED
                 </span>
-                <span className="text-[10px] text-zinc-500">{messages.length} msgs</span>
+                <span className="text-[10px] text-muted-foreground">{messages.length} msgs</span>
             </div>
 
             {/* Messages */}
@@ -93,9 +93,9 @@ export default function LiveChat() {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Say something..."
-                    className="flex-1 bg-black border border-zinc-700 p-2 text-xs text-white focus:border-neon-cyan outline-none font-mono"
+                    className="flex-1 bg-black border border-zinc-800 p-2 text-xs text-white focus:border-neon-cyan outline-none font-mono"
                 />
-                <button type="submit" className="bg-zinc-800 hover:bg-zinc-700 text-neon-cyan p-2">
+                <button type="submit" className="bg-zinc-900 hover:bg-zinc-800 text-neon-cyan p-2 transition-colors">
                     <Send size={14} />
                 </button>
             </form>

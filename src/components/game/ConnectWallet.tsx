@@ -31,7 +31,7 @@ export default function ConnectWallet() {
             return (
                 <button
                     onClick={() => switchChain({ chainId: 84532 })}
-                    className="flex items-center gap-2 bg-red-500 text-white px-4 py-2 font-bold uppercase text-xs hover:bg-red-600 transition"
+                    className="flex items-center gap-2 bg-red-500 text-white px-6 py-2.5 font-bold uppercase text-xs hover:bg-red-600 transition rounded-full shadow-lg"
                 >
                     <AlertTriangle size={16} /> WRONG NETWORK
                 </button>
@@ -41,7 +41,7 @@ export default function ConnectWallet() {
         return (
             <button
                 onClick={() => disconnect()}
-                className="flex items-center gap-2 bg-heist-panel border border-zinc-700 px-4 py-2 hover:bg-zinc-800 transition text-xs font-mono text-neon-cyan"
+                className="flex items-center gap-2 bg-heist-panel border border-zinc-700/50 px-6 py-2.5 hover:bg-zinc-800 transition text-xs font-mono text-neon-cyan rounded-full hover:shadow-[0_0_15px_rgba(0,243,255,0.2)]"
             >
                 <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
                 {address?.slice(0, 6)}...{address?.slice(-4)}
@@ -53,7 +53,7 @@ export default function ConnectWallet() {
     return (
         <button
             onClick={() => connect({ connector: injected() })}
-            className="flex items-center gap-2 bg-neon-cyan text-black px-4 py-2 font-bold uppercase text-xs hover:bg-white transition hover:scale-105"
+            className="flex items-center gap-2 bg-neon-cyan text-black px-6 py-2.5 font-bold uppercase text-xs hover:bg-white transition hover:scale-105 rounded-full shadow-[0_0_20px_rgba(0,243,255,0.3)] hover:shadow-[0_0_30px_rgba(0,243,255,0.5)]"
         >
             <Wallet size={16} /> CONNECT WALLET
         </button>

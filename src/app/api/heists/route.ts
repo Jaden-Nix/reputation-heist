@@ -2,9 +2,17 @@ import { NextResponse } from 'next/server';
 import { db } from '../../../../server/db';
 import { heists as heistsTable } from '../../../../shared/schema';
 
-export async function GET() {
+export async function GET(request: Request) {
     try {
-        const heists = await db.select().from(heistsTable);
+        const { searchParams } = new URL(request.url);
+        const target = searchParams.get('target');
+
+        let heists = await db.select().from(heistsTable);
+
+        if (target) {
+            heists = heists.filter((h: any) => h.opponentAddress?.toLowerCase() === target.toLowerCase());
+        }
+
         return NextResponse.json({ success: true, heists });
     } catch (error) {
         console.error("Fetch Heists Error:", error);

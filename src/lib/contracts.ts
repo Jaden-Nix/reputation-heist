@@ -71,7 +71,8 @@ export const BASE_HEIST_ABI = [
             { "name": "disputer", "type": "address", "internalType": "address" },
             { "name": "disputeStake", "type": "uint256", "internalType": "uint256" },
             { "name": "totalBetsP1", "type": "uint256", "internalType": "uint256" },
-            { "name": "totalBetsP2", "type": "uint256", "internalType": "uint256" }
+            { "name": "totalBetsP2", "type": "uint256", "internalType": "uint256" },
+            { "name": "daredevilJoined", "type": "bool", "internalType": "bool" }
         ],
         "stateMutability": "view"
     },

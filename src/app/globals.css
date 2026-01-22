@@ -5,178 +5,191 @@
 @tailwind utilities;
 
 :root {
-  --font-inter: 'Inter', sans-serif;
-  --font-share-tech-mono: 'Share Tech Mono', monospace;
+    --font-inter: 'Inter', sans-serif;
+    --font-share-tech-mono: 'Share Tech Mono', monospace;
 
-  /* Default Dark Mode (Cyberpunk) */
-  --heist-bg: #050505;
-  --heist-panel: #0a0a0f;
-  --heist-text: #ffffff;
-  --heist-subtext: #a1a1aa;
-  /* zinc-400 */
-  --neon-cyan: #00f3ff;
-  --danger-red: #ff003c;
-  --warning-yellow: #fcee0a;
+    /* Default Dark Mode (Cyberpunk) */
+    --heist-bg: #050505;
+    --heist-panel: #0a0a0f;
+    --heist-text: #ffffff;
+    --heist-subtext: #a1a1aa;
+    /* zinc-400 */
+    --neon-cyan: #00f3ff;
+    --danger-red: #ff003c;
+    --warning-yellow: #fcee0a;
 }
 
 [data-theme='light'] {
-  --heist-bg: #f8fafc;
-  --heist-panel: #ffffff;
-  --heist-text: #0f172a;
-  --heist-subtext: #64748b;
-  --neon-cyan: #0ea5e9;
-  --danger-red: #ef4444;
-  --warning-yellow: #f59e0b;
-  --background: 210 40% 98%;
-  --foreground: 222.2 84% 4.9%;
-  --card: 0 0% 100%;
-  --card-foreground: 222.2 84% 4.9%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 222.2 84% 4.9%;
-  --primary: 199 89% 48%;
-  --primary-foreground: 210 40% 98%;
-  --secondary: 210 40% 96.1%;
-  --secondary-foreground: 222.2 47.4% 11.2%;
-  --muted: 210 40% 96.1%;
-  --muted-foreground: 215.4 16.3% 46.9%;
-  --accent: 210 40% 96.1%;
-  --accent-foreground: 222.2 47.4% 11.2%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 214.3 31.8% 91.4%;
-  --input: 214.3 31.8% 91.4%;
-  --ring: 199 89% 48%;
+    --heist-bg: #f2f2f2;
+    /* Lighter, cleaner gray */
+    --heist-panel: #ffffff;
+    --heist-text: #0a0a0a;
+    --heist-subtext: #52525b;
+    --neon-cyan: #0091ff;
+    /* Deep electric blue */
+    --danger-red: #e11d48;
+    /* Crimson */
+    --warning-yellow: #d97706;
+    /* Amber */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 210 100% 50%;
+    /* Pure Blue */
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 210 100% 50%;
 }
 
 .ethos-scan-line {
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
-  animation: scan-vertical 3s linear infinite;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+    animation: scan-vertical 3s linear infinite;
 }
 
 @keyframes scan-vertical {
-  0% { transform: translateY(-100%); opacity: 0; }
-  50% { opacity: 1; }
-  100% { transform: translateY(100%); opacity: 0; }
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
 }
 
 body {
-  background-color: var(--heist-bg);
-  color: var(--heist-text);
-  font-family: var(--font-inter);
-  overflow-x: hidden;
-  transition: background-color 0.3s, color 0.3s;
+    background-color: var(--heist-bg);
+    color: var(--heist-text);
+    font-family: var(--font-inter);
+    overflow-x: hidden;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+    width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-heist-bg;
+    @apply bg-heist-bg;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-zinc-800 rounded hover:bg-zinc-700;
+    @apply bg-zinc-800 rounded hover:bg-zinc-700;
 }
 
 /* Utilities */
 .text-glow {
-  text-shadow: 0 0 10px currentColor;
+    text-shadow: 0 0 10px currentColor;
 }
 
 .box-glow {
-  box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
 }
 
 .crt-scanline {
-  background: linear-gradient(to bottom,
-      rgba(255, 255, 255, 0),
-      rgba(255, 255, 255, 0) 50%,
-      rgba(0, 0, 0, 0.2) 50%,
-      rgba(0, 0, 0, 0.2));
-  background-size: 100% 4px;
-  pointer-events: none;
-  z-index: 50;
+    background: linear-gradient(to bottom,
+            rgba(255, 255, 255, 0),
+            rgba(255, 255, 255, 0) 50%,
+            rgba(0, 0, 0, 0.2) 50%,
+            rgba(0, 0, 0, 0.2));
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 50;
 }
 
 .glitch-text {
-  position: relative;
+    position: relative;
 }
 
 .glitch-text::before,
 .glitch-text::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .glitch-text::before {
-  left: 2px;
-  text-shadow: -1px 0 #ff003c;
-  clip: rect(24px, 550px, 90px, 0);
-  animation: glitch-anim-2 3s infinite linear alternate-reverse;
+    left: 2px;
+    text-shadow: -1px 0 #ff003c;
+    clip: rect(24px, 550px, 90px, 0);
+    animation: glitch-anim-2 3s infinite linear alternate-reverse;
 }
 
 .glitch-text::after {
-  left: -2px;
-  text-shadow: -1px 0 #00f3ff;
-  clip: rect(85px, 550px, 140px, 0);
-  animation: glitch-anim 2.5s infinite linear alternate-reverse;
+    left: -2px;
+    text-shadow: -1px 0 #00f3ff;
+    clip: rect(85px, 550px, 140px, 0);
+    animation: glitch-anim 2.5s infinite linear alternate-reverse;
 }
 
 @keyframes glitch-anim {
-  0% {
-    clip: rect(20px, 9999px, 15px, 0);
-  }
+    0% {
+        clip: rect(20px, 9999px, 15px, 0);
+    }
 
-  20% {
-    clip: rect(65px, 9999px, 86px, 0);
-  }
+    20% {
+        clip: rect(65px, 9999px, 86px, 0);
+    }
 
-  40% {
-    clip: rect(4px, 9999px, 100px, 0);
-  }
+    40% {
+        clip: rect(4px, 9999px, 100px, 0);
+    }
 
-  60% {
-    clip: rect(98px, 9999px, 34px, 0);
-  }
+    60% {
+        clip: rect(98px, 9999px, 34px, 0);
+    }
 
-  80% {
-    clip: rect(44px, 9999px, 2px, 0);
-  }
+    80% {
+        clip: rect(44px, 9999px, 2px, 0);
+    }
 
-  100% {
-    clip: rect(56px, 9999px, 81px, 0);
-  }
+    100% {
+        clip: rect(56px, 9999px, 81px, 0);
+    }
 }
 
 @keyframes glitch-anim-2 {
-  0% {
-    clip: rect(65px, 9999px, 100px, 0);
-  }
+    0% {
+        clip: rect(65px, 9999px, 100px, 0);
+    }
 
-  20% {
-    clip: rect(5px, 9999px, 16px, 0);
-  }
+    20% {
+        clip: rect(5px, 9999px, 16px, 0);
+    }
 
-  40% {
-    clip: rect(100px, 9999px, 78px, 0);
-  }
+    40% {
+        clip: rect(100px, 9999px, 78px, 0);
+    }
 
-  60% {
-    clip: rect(10px, 9999px, 4px, 0);
-  }
+    60% {
+        clip: rect(10px, 9999px, 4px, 0);
+    }
 
-  80% {
-    clip: rect(92px, 9999px, 20px, 0);
-  }
+    80% {
+        clip: rect(92px, 9999px, 20px, 0);
+    }
 
-  100% {
-    clip: rect(32px, 9999px, 80px, 0);
-  }
+    100% {
+        clip: rect(32px, 9999px, 80px, 0);
+    }
 }

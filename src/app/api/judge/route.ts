@@ -20,7 +20,7 @@ export async function POST(request: Request) {
         await new Promise(resolve => setTimeout(resolve, 2000));
 
         // 2. Use Gemini to judge the proof
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
         const prompt = `
         You are the "Heist Master", a chaotic, cynical, but fair AI judge of reputation bets.
