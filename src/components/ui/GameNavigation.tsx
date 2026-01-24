@@ -10,8 +10,8 @@ import NotificationBell from '@/components/ui/NotificationBell';
 export default function GameNavigation() {
     const pathname = usePathname();
 
-    // Only show navigation on the Bounty Board page
-    if (pathname !== '/bounty-board') return null;
+    // Only hide navigation on the Landing Page
+    if (pathname === '/') return null;
 
     return (
         <>

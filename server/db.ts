@@ -28,7 +28,8 @@ const mockDb = {
         status: 'LIVE', // Force status to LIVE for UI visibility
         createdAt: new Date(),
         player1: { name: 'You (Mock)', address: data.creatorAddress },
-        player2: { name: 'Target', address: data.opponentAddress }
+        player2: { name: 'Target', address: data.opponentAddress },
+        chainHeistId: data.chainHeistId || null
       };
       globalForMock.mockHeists.push(newHeist);
       return { returning: () => Promise.resolve([newHeist]) };

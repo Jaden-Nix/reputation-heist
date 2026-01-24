@@ -13,6 +13,7 @@ export const heists = pgTable("heists", {
   status: text("status").notNull().default("LIVE"), // LIVE, JUDGING, SETTLED, ESCROW
   verdict: text("verdict"),
   confidenceScore: integer("confidence_score"),
+  chainHeistId: integer("chain_heist_id"), // The actual ID on the smart contract
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 

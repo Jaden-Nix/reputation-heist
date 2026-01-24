@@ -31,6 +31,7 @@ export async function POST(request: Request) {
             bounty: (data.bounty || '0').toString(),
             collateral: (data.collateral || '0').toString(),
             status: 'LIVE',
+            chainHeistId: data.chainHeistId || null
         }).returning();
 
         return NextResponse.json({ success: true, heist: newHeist });

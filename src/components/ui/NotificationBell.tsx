@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Bell, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAccount } from 'wagmi';
@@ -22,6 +22,7 @@ export default function NotificationBell() {
     const [isOpen, setIsOpen] = useState(false);
     const [lastSeenCount, setLastSeenCount] = useState(0);
     const [mounted, setMounted] = useState(false);
+    const prevInvitesRef = useRef(0);
 
     useEffect(() => {
         setMounted(true);
@@ -51,6 +52,20 @@ export default function NotificationBell() {
         const interval = setInterval(fetchInvites, 5000); // Poll every 5s
         return () => clearInterval(interval);
     }, [address, isConnected]);
+
+    // Toast Notification for New Invites
+    useEffect(() => {
+        if (invites.length > prevInvitesRef.current) {
+            const newCount = invites.length - prevInvitesRef.current;
+            // Only show toast if we have previous state (don't spam on initial load)
+            if (prevInvitesRef.current > 0 || invites.length === 1) {
+                toast.warning(`🎯 ${newCount} NEW DARE${newCount > 1 ? 'S' : ''}!`, {
+                    description: 'Someone challenged you. Check your notifications.'
+                });
+            }
+        }
+        prevInvitesRef.current = invites.length;
+    }, [invites]);
 
     const unseenCount = invites.length - lastSeenCount;
     const hasUnseen = unseenCount > 0;

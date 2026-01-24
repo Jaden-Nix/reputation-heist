@@ -106,6 +106,36 @@ export default function Home() {
                     </motion.div>
                 </div>
             </div>
-        </main>
+
+            {/* Features Section */}
+            <div className="max-w-6xl w-full mt-32 grid grid-cols-1 md:grid-cols-3 gap-8 z-10">
+                <div className="bg-black/20 border border-zinc-800 p-8 rounded-xl backdrop-blur-sm group hover:border-neon-cyan transition-all">
+                    <Shield className="text-neon-cyan mb-4 group-hover:scale-110 transition-transform" size={40} />
+                    <h3 className="text-xl font-black italic mb-2">ETHOS ENFORCED</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                        Every agent's Cred is on the line. Fail a dare, and watch your reputation shatter in real-time.
+                    </p>
+                </div>
+                <div className="bg-black/20 border border-zinc-800 p-8 rounded-xl backdrop-blur-sm group hover:border-purple-500 transition-all">
+                    <HeistMasterEye size={40} className="mb-4 group-hover:scale-110 transition-transform" />
+                    <h3 className="text-xl font-black italic mb-2 uppercase">AI Oracle</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                        The Heist Master (LLM-Judge) verifies every proof. No bias, no mercy, just cold, hard truth.
+                    </p>
+                </div>
+                <div className="bg-black/20 border border-zinc-800 p-8 rounded-xl backdrop-blur-sm group hover:border-green-500 transition-all">
+                    <TrendingUp className="text-green-500 mb-4 group-hover:scale-110 transition-transform" size={40} />
+                    <h3 className="text-xl font-black italic mb-2 uppercase">Prediction Market</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                        Don't want to get your hands dirty? Place ETH bets on the outcome of active missions on the Board.
+                    </p>
+                </div>
+            </div>
+
+            {/* Footer / Info */}
+            <div className="mt-24 pb-12 text-center z-10">
+                <div className="text-[10px] font-mono text-zinc-600 uppercase tracking-[0.5em] mb-4">Secure Connection // End of Uplink</div>
+            </div>
+        </main >
     );
 }
